@@ -3,6 +3,7 @@
 #include <lua.hpp>
 #include <string>
 #include <thelua/stack.hpp>
+#include <thelua/function.hpp>
 
 namespace the
 {
@@ -42,6 +43,11 @@ class State final
     {
       lua_getglobal( m_lua_state, name.data() );
       return m_stack.pop< T >();
+    }
+
+    Function function( const std::string& name )
+    {
+      return Function( m_lua_state, name );
     }
 
   private:
