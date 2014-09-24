@@ -71,6 +71,13 @@ inline double Stack::pop< double >() const
 }
 
 template <>
+inline int Stack::pop< int >() const
+{
+  return pop< double >();
+}
+
+
+template <>
 inline bool Stack::pop< bool >() const
 {
   bool value( lua_toboolean( m_lua_state, -1 ) );
