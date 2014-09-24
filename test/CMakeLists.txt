@@ -7,6 +7,7 @@ include_directories(../src)
 set(TEST_SOURCE_FILES
   test_runner.cpp
   test_state.cpp
+  test_stack.cpp
     )
 
 

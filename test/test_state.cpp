@@ -1,5 +1,5 @@
-#include <lua.hpp>
 #include <thelua/state.hpp>
+#include <lua.hpp>
 
 #include <igloo/igloo_alt.h>
 using namespace igloo;
