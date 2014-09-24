@@ -26,6 +26,7 @@ if(UNIX)
 endif(UNIX)
 
 include_directories(include)
+include_directories(/usr/local/include/lua52)
 
 add_definitions(-std=c++11
                 -Wall
@@ -43,7 +44,6 @@ else(sanitize)
     message("--> Sanitizing is disabled.")
 endif(sanitize)
 
-add_subdirectory(src)
 add_subdirectory(test)
 add_subdirectory(include)
 
