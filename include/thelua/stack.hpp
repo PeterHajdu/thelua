@@ -19,6 +19,11 @@ class Stack
     template < typename T >
     void push( const T& value );
 
+    void push( const char* value )
+    {
+      lua_pushstring( m_lua_state, value );
+    }
+
     template < typename T >
     T pop() const;
 

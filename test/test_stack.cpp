@@ -34,6 +34,12 @@ Describe( a_lua_stack )
     AssertThat( stack->pop<std::string>(), Equals( "" ) );
   }
 
+  It( can_push_cstring_value_to_the_stack )
+  {
+    stack->push( "dog" );
+    AssertThat( stack->pop<std::string>(), Equals( "dog" ) );
+  }
+
   std::unique_ptr< the::lua::State > state;
   std::unique_ptr< the::lua::Stack > stack;
 };
