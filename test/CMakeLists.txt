@@ -9,6 +9,7 @@ set(TEST_SOURCE_FILES
   test_state.cpp
   test_stack.cpp
   test_function.cpp
+  test_export_function.cpp
     )
 
 

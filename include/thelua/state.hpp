@@ -2,6 +2,8 @@
 
 #include <lua.hpp>
 #include <string>
+#include <vector>
+#include <functional>
 #include <thelua/stack.hpp>
 #include <thelua/function.hpp>
 
@@ -9,6 +11,7 @@ namespace the
 {
 namespace lua
 {
+
 
 class State final
 {
@@ -48,6 +51,12 @@ class State final
     Function function( const std::string& name )
     {
       return Function( m_lua_state, name );
+    }
+
+    void export_function( const std::string& name, lua_CFunction function )
+    {
+      lua_pushcfunction( m_lua_state, function );
+      lua_setglobal( m_lua_state, name.data() );
     }
 
   private:
