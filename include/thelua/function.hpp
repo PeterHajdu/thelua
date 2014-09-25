@@ -9,6 +9,7 @@ namespace the
 namespace lua
 {
 
+template< typename ReturnValue >
 class Function
 {
   public:
@@ -20,23 +21,24 @@ class Function
     }
 
     template < typename...Args >
-    void operator()( Args&&...args )
+    ReturnValue operator()( Args&&...args )
     {
       lua_getglobal( m_lua_state, m_name.data() );
-      call( 0, std::forward< Args >( args )... );
+      return call( 0, std::forward< Args >( args )... );
     }
 
   private:
     template < typename Head, typename...Tail >
-    void call( int number_of_arguments, Head&& head, Tail&&...tail )
+    ReturnValue call( int number_of_arguments, Head&& head, Tail&&...tail )
     {
       m_stack.push( head );
-      call( number_of_arguments + 1, std::forward< Tail >( tail )... );
+      return call( number_of_arguments + 1, std::forward< Tail >( tail )... );
     }
 
-    void call( int number_of_arguments )
+    ReturnValue call( int number_of_arguments )
     {
-      lua_pcall( m_lua_state, number_of_arguments, 0, 0 );
+      lua_pcall( m_lua_state, number_of_arguments, 1, 0 );
+      return m_stack.pop< ReturnValue >();
     }
 
     lua_State* m_lua_state;

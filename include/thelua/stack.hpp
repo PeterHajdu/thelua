@@ -90,6 +90,11 @@ inline bool Stack::pop< bool >() const
   return value;
 }
 
+template <>
+inline void Stack::pop< void >() const
+{
+}
+
 }
 }
 
