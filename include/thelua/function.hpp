@@ -3,6 +3,7 @@
 #include <thelua/stack.hpp>
 #include <lua.hpp>
 #include <string>
+#include <tuple>
 
 namespace the
 {
