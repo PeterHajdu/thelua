@@ -32,6 +32,14 @@ Describe( a_lua_function )
     AssertThat( state->get_global< bool >( "a_function_was_called" ), Equals( true ) );
   }
 
+  It( can_call_a_lua_function_with_a_parameter_and_no_return_value )
+  {
+    state->function( "a_function" )( "hello" );
+    AssertThat(
+        state->get_global< std::string >( "a_function_was_called_with_parameter" ),
+        Equals( "hello" ) );
+  }
+
   std::unique_ptr< the::lua::State > state;
 };
 
