@@ -13,7 +13,7 @@ const std::string lua_script(
 "    function a_function( text )"
 "      a_function_was_called = true"
 "      a_function_was_called_with_parameter = text"
-"      return 10"
+"      return 10, text"
 "    end " );
 
 }
@@ -29,13 +29,13 @@ Describe( a_lua_function )
 
   It( can_call_a_lua_function_without_parameters_and_return_value )
   {
-    state->function< void >( "a_function" )();
+    state->function( "a_function" )();
     AssertThat( state->get_global< bool >( "a_function_was_called" ), Equals( true ) );
   }
 
   It( can_call_a_lua_function_with_a_parameter_and_no_return_value )
   {
-    state->function< void >( "a_function" )( "hello" );
+    state->function( "a_function" )( "hello" );
     AssertThat(
         state->get_global< std::string >( "a_function_was_called_with_parameter" ),
         Equals( "hello" ) );
@@ -43,8 +43,9 @@ Describe( a_lua_function )
 
   It( can_call_a_lua_function_with_return_values )
   {
-    const auto return_value( state->function< int >( "a_function" )( "hello" ) );
-    AssertThat( return_value, Equals( 10 ) );
+    const auto return_value( state->function( "a_function" ).call< int, std::string >( "hello" ) );
+    AssertThat( std::get<0>( return_value ), Equals( 10 ) );
+    AssertThat( std::get<1>( return_value ), Equals( "hello" ) );
   }
 
   std::unique_ptr< the::lua::State > state;

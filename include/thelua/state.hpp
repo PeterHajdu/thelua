@@ -45,10 +45,9 @@ class State final
       return m_stack.pop< T >();
     }
 
-    template < typename ReturnValue >
-    Function< ReturnValue > function( const std::string& name )
+    Function function( const std::string& name )
     {
-      return Function< ReturnValue >( m_lua_state, name );
+      return Function( m_lua_state, name );
     }
 
   private:
