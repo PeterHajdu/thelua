@@ -16,12 +16,23 @@ class Stack
     {
     }
 
+    template < typename Head, typename...Tail >
+    void push( const Head& head, const Tail&...tail )
+    {
+      push( head );
+      push( tail... );
+    }
+
     template < typename T >
-    void push( const T& value );
+    void push( const T& head );
 
     void push( const char* value )
     {
       lua_pushstring( m_lua_state, value );
+    }
+
+    void push()
+    {
     }
 
     template < typename T >

@@ -49,7 +49,7 @@ class Function
     void operator()( Args&&...args )
     {
       lua_getglobal( m_lua_state, m_name.data() );
-      push_to_stack( std::forward< Args >( args )... );
+      m_stack.push( std::forward< Args >( args )... );
       call_stack( 0, sizeof...( Args ) );
     }
 
@@ -57,7 +57,7 @@ class Function
     std::tuple< ReturnTypes...> call( Args&&...args )
     {
       lua_getglobal( m_lua_state, m_name.data() );
-      push_to_stack( std::forward< Args >( args )... );
+      m_stack.push( std::forward< Args >( args )... );
       call_stack( sizeof...( ReturnTypes ), sizeof...( Args ) );
 
       std::tuple< ReturnTypes... > return_value;
@@ -66,22 +66,6 @@ class Function
     }
 
   private:
-    template < typename Head, typename...Tail >
-    void push_to_stack( Head&& head, Tail&&...tail )
-    {
-      m_stack.push( head );
-      push_to_stack( std::forward< Tail >( tail )... );
-    }
-
-    template < typename Head >
-    void push_to_stack( Head&& head )
-    {
-      m_stack.push( head );
-    }
-
-    void push_to_stack()
-    {
-    }
 
     void call_stack( int number_of_results, int number_of_arguments )
     {

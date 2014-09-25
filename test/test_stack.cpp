@@ -40,6 +40,14 @@ Describe( a_lua_stack )
     AssertThat( stack->pop<std::string>(), Equals( "dog" ) );
   }
 
+  It( can_push_many_values )
+  {
+    stack->push( "dog", 10, true );
+    AssertThat( stack->pop< bool >(), Equals( true ) );
+    AssertThat( stack->pop< int >(), Equals( 10 ) );
+    AssertThat( stack->pop< std::string >(), Equals( "dog" ) );
+  }
+
   std::unique_ptr< the::lua::State > state;
   std::unique_ptr< the::lua::Stack > stack;
 };
